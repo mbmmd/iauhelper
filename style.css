@@ -38,11 +38,6 @@ button:hover {
     border-radius: 8px;
 }
 
-/* استایل برای دکمه‌های چک‌باکس */
-input[type="checkbox"] {
-    accent-color: #4A90E2;
-}
-
 /* کارت دروس */
 .class-box {
     background-color: #4A90E2;
