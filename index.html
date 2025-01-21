@@ -1,45 +1,65 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>انتخاب واحد</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/dragula@3.7.3/dist/dragula.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-gray-800 text-white">
-    <div class="container mx-auto p-8">
-        <!-- نوار پیشرفت -->
-        <div class="progress-bar">
-            <div id="progress-fill" class="progress-bar-fill"></div>
-        </div>
+/* تنظیمات عمومی */
+body {
+    font-family: 'Vazir', sans-serif;
+    direction: rtl;
+}
 
-        <h1 class="text-4xl font-bold text-center mb-6">انتخاب واحد</h1>
+h1, h2 {
+    color: #edf2f7;
+}
 
-        <!-- پیام هشدار در صورت انتخاب نادرست -->
-        <div id="alert" class="alert">
-            پیش‌نیازهای درس به درستی انتخاب نشده است!
-        </div>
+h2 {
+    border-bottom: 2px solid #4A90E2;
+    padding-bottom: 10px;
+}
 
-        <!-- مرحله اول: انتخاب دروس ترم‌ها -->
-        <h2 class="text-2xl mb-4 text-center">مرحله اول: دروس ترم‌ها را انتخاب کنید</h2>
-        <div id="semester-selection" class="space-y-6 mb-8">
-            <!-- محتوای داینامیک برای ترم‌ها -->
-        </div>
+button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-        <!-- مرحله دوم: نمایش دروس معتبر -->
-        <h2 id="phase-2-title" class="text-2xl mb-4 text-center hidden">مرحله دوم: دروس معتبر را انتخاب کنید</h2>
-        <div id="available-courses" class="space-y-6 mb-8 hidden">
-            <!-- محتوای داینامیک برای دروس معتبر -->
-        </div>
+button:hover {
+    background-color: #357ABD;
+}
 
-        <!-- دکمه‌ها برای حرکت به مرحله بعد -->
-        <div class="mt-8 text-center">
-            <button id="next-phase" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-200">مرحله بعدی</button>
-        </div>
-    </div>
+/* نوار پیشرفت */
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #f3f3f3;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
 
-    <script src="app.js"></script>
-</body>
-</html>
+.progress-bar-fill {
+    height: 100%;
+    width: 0;
+    background-color: #4A90E2;
+    border-radius: 8px;
+}
+
+/* کارت دروس */
+.class-box {
+    background-color: #4A90E2;
+    color: white;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.class-box:hover {
+    background-color: #357ABD;
+}
+
+/* طراحی ریسپانسیو */
+@media (max-width: 768px) {
+    .calendar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .day {
+        min-height: 200px;
+    }
+}
