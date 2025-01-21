@@ -1,65 +1,101 @@
-// Handling Stage 1: Course Selection
-const nextStageButton = document.getElementById('nextStage');
-nextStageButton.addEventListener('click', function() {
-    const selectedCourses = getSelectedCourses();
-    if (selectedCourses.length > 0) {
-        showStage(2);
-        suggestCourses(selectedCourses);
-    } else {
-        alert('لطفا حداقل یک دوره را انتخاب کنید.');
+let selectedCourses = [];  // آرایه برای ذخیره دروس انتخابی
+let currentPhase = 0;      // فاز کنونی در انتخاب واحد
+let totalPhases = 3;       // تعداد فازها (انتخاب دروس، نمایش دروس معتبر، برنامه هفتگی)
+
+document.getElementById('next-phase').addEventListener('click', () => {
+    if (currentPhase === 0) {
+        currentPhase++;
+        renderAvailableCourses();
+        document.getElementById('phase-2-title').classList.remove('hidden');
+        document.getElementById('semester-selection').classList.add('hidden');
+    }
+    else if (currentPhase === 1) {
+        currentPhase++;
+        showSchedule();
     }
 });
 
-// Handling Stage 2: Course Suggestion
-const loadMoreButton = document.getElementById('loadMore');
-loadMoreButton.addEventListener('click', function() {
-    loadMoreCourses();
-});
+function renderSemesterSelection(data) {
+    const semesterSelection = document.getElementById('semester-selection');
+    data.program.semesters.forEach((semester, index) => {
+        const semesterDiv = document.createElement('div');
+        semesterDiv.classList.add('space-y-4');
+        const semesterTitle = document.createElement('h3');
+        semesterTitle.textContent = `ترم ${index + 1}`;
+        semesterTitle.classList.add('text-xl', 'font-bold');
 
-const finishButton = document.getElementById('finish');
-finishButton.addEventListener('click', function() {
-    showStage(3);
-});
+        const courseList = document.createElement('div');
+        courseList.classList.add('grid', 'grid-cols-2', 'gap-4');
 
-function getSelectedCourses() {
-    const selectedCourses = [];
-    document.querySelectorAll('.course-item input:checked').forEach(input => {
-        selectedCourses.push(input.value);
+        const selectAllButton = document.createElement('button');
+        selectAllButton.classList.add('bg-blue-500', 'text-white', 'p-3', 'rounded', 'w-full');
+        selectAllButton.textContent = 'انتخاب همه دروس';
+        selectAllButton.onclick = function() {
+            semester.courses.forEach(course => {
+                if (!selectedCourses.includes(course)) {
+                    selectedCourses.push(course);
+                    document.querySelector(`#checkbox-${course.code}`).checked = true;
+                }
+            });
+        };
+        semesterDiv.appendChild(selectAllButton);
+
+        semester.courses.forEach(course => {
+            const courseDiv = document.createElement('div');
+            courseDiv.classList.add('flex', 'items-center', 'space-x-2');
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `checkbox-${course.code}`;
+            checkbox.classList.add('h-4', 'w-4');
+            checkbox.onclick = function() {
+                if (checkbox.checked) {
+                    selectedCourses.push(course);
+                } else {
+                    selectedCourses = selectedCourses.filter(item => item !== course);
+                }
+                updateProgressBar();
+            };
+
+            const label = document.createElement('label');
+            label.setAttribute('for', `checkbox-${course.code}`);
+            label.textContent = `${course.name} (${course.code})`;
+
+            courseDiv.appendChild(checkbox);
+            courseDiv.appendChild(label);
+            courseList.appendChild(courseDiv);
+        });
+
+        semesterDiv.appendChild(courseList);
+        semesterSelection.appendChild(semesterDiv);
     });
-    return selectedCourses;
 }
 
-function showStage(stageNumber) {
-    document.querySelectorAll('.stage').forEach(stage => {
-        stage.classList.remove('active');
-    });
-    document.getElementById(`stage${stageNumber}`).classList.add('active');
+function updateProgressBar() {
+    const progress = (selectedCourses.length / 15) * 100;  // فرض بر 15 درس
+    document.getElementById('progress-fill').style.width = `${progress}%`;
 }
 
-function suggestCourses(selectedCourses) {
-    const suggestedCoursesContainer = document.querySelector('.suggested-courses');
-    suggestedCoursesContainer.innerHTML = '';  // Clear previous suggestions
+function renderAvailableCourses() {
+    const availableCourses = document.getElementById('available-courses');
+    availableCourses.innerHTML = '';  // Clear existing content
 
-    const allCourses = getAllCourses();  // Assume this function returns the full course list
+    selectedCourses.forEach(course => {
+        const classBox = document.createElement('div');
+        classBox.classList.add('class-box');
+        classBox.textContent = `${course.name} (${course.code})`;
 
-    const remainingCourses = allCourses.filter(course => {
-        return !selectedCourses.includes(course.id);
+        availableCourses.appendChild(classBox);
     });
 
-    remainingCourses.forEach(course => {
-        const courseElement = document.createElement('div');
-        courseElement.classList.add('course-item');
-        courseElement.innerHTML = `<input type="checkbox" id="${course.id}" value="${course.id}"><label for="${course.id}">${course.name}</label>`;
-        suggestedCoursesContainer.appendChild(courseElement);
-    });
+    document.getElementById('available-courses').classList.remove('hidden');
 }
 
-function getAllCourses() {
-    return [
-        { id: 'course1', name: 'دوره 1' },
-        { id: 'course2', name: 'دوره 2' },
-        { id: 'course3', name: 'دوره 3' },
-        { id: 'course4', name: 'دوره 4' },
-        // Add more courses
-    ];
+function showSchedule() {
+    // نمایش برنامه هفتگی
+    alert('نمایش برنامه هفتگی');
 }
+
+fetch('https://raw.githubusercontent.com/mbmmd/iauhelper/main/chart.json')
+    .then(response => response.json())
+    .then(data => renderSemesterSelection(data));
