@@ -3,58 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سیستم انتخاب دوره</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>انتخاب واحد</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/dragula@3.7.3/dist/dragula.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container">
-        <!-- Header Section -->
-        <header class="header">
-            <h1>سیستم انتخاب دوره</h1>
-            <p>لطفا دوره‌های قبلی خود را انتخاب کنید.</p>
-        </header>
+<body class="bg-gray-800 text-white">
+    <div class="container mx-auto p-8">
+        <!-- نوار پیشرفت -->
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-bar-fill"></div>
+        </div>
 
-        <!-- Stage 1: Course Selection -->
-        <section id="stage1" class="stage">
-            <h2>انتخاب دروس گذرانده</h2>
-            <div class="course-list">
-                <!-- List of Courses (Ex: Course 1, Course 2) -->
-                <div class="course-item">
-                    <input type="checkbox" id="course1" value="course1">
-                    <label for="course1">دوره 1</label>
-                </div>
-                <div class="course-item">
-                    <input type="checkbox" id="course2" value="course2">
-                    <label for="course2">دوره 2</label>
-                </div>
-                <!-- More courses go here -->
-            </div>
-            <button id="nextStage" class="btn-next">مرحله بعد</button>
-        </section>
+        <h1 class="text-4xl font-bold text-center mb-6">انتخاب واحد</h1>
 
-        <!-- Stage 2: Course Suggestion Based on Pre-Passed Courses -->
-        <section id="stage2" class="stage hidden">
-            <h2>انتخاب دروس جدید</h2>
-            <div class="suggested-courses">
-                <!-- Suggested courses will be dynamically injected here -->
-            </div>
-            <div class="unit-counter">
-                <span>واحد های انتخابی: <span id="selected-units">0</span></span>
-            </div>
-            <button id="loadMore" class="btn-load">بیشتر نشان بده</button>
-            <button id="finish" class="btn-finish">پایان</button>
-        </section>
+        <!-- پیام هشدار در صورت انتخاب نادرست -->
+        <div id="alert" class="alert">
+            پیش‌نیازهای درس به درستی انتخاب نشده است!
+        </div>
 
-        <!-- Stage 3: Schedule Creation -->
-        <section id="stage3" class="stage hidden">
-            <h2>ساخت برنامه هفتگی</h2>
-            <div class="schedule-table">
-                <!-- Schedule will be dynamically generated here -->
-            </div>
-            <button id="finishSchedule" class="btn-finish">پایان</button>
-        </section>
+        <!-- مرحله اول: انتخاب دروس ترم‌ها -->
+        <h2 class="text-2xl mb-4 text-center">مرحله اول: دروس ترم‌ها را انتخاب کنید</h2>
+        <div id="semester-selection" class="space-y-6 mb-8">
+            <!-- محتوای داینامیک برای ترم‌ها -->
+        </div>
+
+        <!-- مرحله دوم: نمایش دروس معتبر -->
+        <h2 id="phase-2-title" class="text-2xl mb-4 text-center hidden">مرحله دوم: دروس معتبر را انتخاب کنید</h2>
+        <div id="available-courses" class="space-y-6 mb-8 hidden">
+            <!-- محتوای داینامیک برای دروس معتبر -->
+        </div>
+
+        <!-- دکمه‌ها برای حرکت به مرحله بعد -->
+        <div class="mt-8 text-center">
+            <button id="next-phase" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-200">مرحله بعدی</button>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
