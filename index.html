@@ -7,11 +7,11 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://unpkg.com/dragula@3.7.3/dist/dragula.min.js"></script>
   <style>
-    /* Custom Styles for Calendar */
+    /* Custom Styles */
     .calendar {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      grid-gap: 20px;
+      grid-gap: 15px;
       margin-top: 20px;
     }
     .day {
@@ -66,15 +66,14 @@
       پیش‌نیازهای درس به درستی انتخاب نشده است!
     </div>
 
-    <!-- Step 1: Select Previously Completed Courses -->
-    <h2 class="text-2xl mb-4 text-center">مرحله اول: دروس گذشته را انتخاب کنید</h2>
-    <div id="previous-courses" class="grid grid-cols-3 gap-4 mb-8">
-      <!-- اینجا دروس قبلی که کاربر گذرانده است، لیست خواهد شد -->
+    <!-- Step 1: Select Courses for Each Semester -->
+    <h2 class="text-2xl mb-4 text-center">مرحله اول: دروس ترم‌ها را انتخاب کنید</h2>
+    <div id="semester-selection" class="space-y-6 mb-8">
+      <!-- Dynamic content for semesters -->
     </div>
 
-    <!-- Calendar Table -->
+    <!-- Calendar Table for Week -->
     <div id="calendar" class="calendar">
-      <!-- روزهای هفته -->
       <div class="day" id="day-0">یکشنبه</div>
       <div class="day" id="day-1">دوشنبه</div>
       <div class="day" id="day-2">سه‌شنبه</div>
@@ -93,16 +92,56 @@
   <script>
     let selectedCourses = [];
 
-    // بارگذاری داده‌های JSON از GitHub
+    // Fetch and render data from chart.json
     fetch('https://raw.githubusercontent.com/mbmmd/iauhelper/main/chart.json')
       .then(response => response.json())
       .then(data => {
-        renderClasses(data);
-        renderPreviousCourses(data);
+        renderSemesterSelection(data);
+        renderCalendar(data);
       });
 
-    function renderClasses(data) {
+    // Render Semester Selection
+    function renderSemesterSelection(data) {
+      const semesterSelection = document.getElementById('semester-selection');
+
+      data.program.semesters.forEach((semester, index) => {
+        const semesterDiv = document.createElement('div');
+        semesterDiv.classList.add('space-y-4');
+        const semesterTitle = document.createElement('h3');
+        semesterTitle.textContent = `ترم ${index + 1}`;
+        semesterTitle.classList.add('text-xl', 'font-bold');
+
+        const courseList = document.createElement('div');
+        courseList.classList.add('grid', 'grid-cols-2', 'gap-4');
+        
+        semester.courses.forEach(course => {
+          const courseBox = document.createElement('button');
+          courseBox.classList.add('bg-blue-500', 'text-white', 'p-3', 'rounded', 'w-full');
+          courseBox.textContent = course.name;
+          courseBox.dataset.courseCode = course.code;
+          courseBox.onclick = function() {
+            // Toggle course selection
+            if (selectedCourses.includes(course)) {
+              selectedCourses = selectedCourses.filter(c => c !== course);
+              courseBox.classList.remove('bg-green-500');
+            } else {
+              selectedCourses.push(course);
+              courseBox.classList.add('bg-green-500');
+            }
+          };
+          courseList.appendChild(courseBox);
+        });
+
+        semesterDiv.appendChild(semesterTitle);
+        semesterDiv.appendChild(courseList);
+        semesterSelection.appendChild(semesterDiv);
+      });
+    }
+
+    // Render the Calendar Table
+    function renderCalendar(data) {
       const calendar = document.getElementById('calendar');
+
       data.program.semesters.forEach((semester, index) => {
         semester.courses.forEach(course => {
           let courseBox = document.createElement('div');
@@ -113,7 +152,7 @@
           courseBox.dataset.courseName = course.name;
           courseBox.dataset.courseSemester = index + 1;
 
-          let dayIndex = index % 7; // تخصیص درس به روزهای مختلف بر اساس ترم
+          let dayIndex = index % 7;
           calendar.children[dayIndex].appendChild(courseBox);
         });
       });
@@ -121,23 +160,7 @@
       setupDragAndDrop();
     }
 
-    function renderPreviousCourses(data) {
-      const previousCoursesContainer = document.getElementById('previous-courses');
-      data.program.semesters.forEach((semester, index) => {
-        semester.courses.forEach(course => {
-          let courseBox = document.createElement('button');
-          courseBox.classList.add('bg-blue-500', 'text-white', 'p-3', 'rounded', 'w-full');
-          courseBox.textContent = course.name;
-          courseBox.dataset.courseCode = course.code;
-          courseBox.onclick = function() {
-            selectedCourses.push(course);
-            courseBox.classList.add('bg-green-500');
-          };
-          previousCoursesContainer.appendChild(courseBox);
-        });
-      });
-    }
-
+    // Drag and drop functionality
     function setupDragAndDrop() {
       const drake = dragula(document.querySelectorAll('.day'));
 
@@ -147,9 +170,10 @@
 
       drake.on('drop', function (el, target, source) {
         el.classList.remove('dragging');
+        const dayId = target.id;
         const courseCode = el.dataset.courseCode;
 
-        // بررسی پیش‌نیازهای کلاس
+        // Check course prerequisites
         const course = findCourseByCode(courseCode);
         if (!isValidCourse(course, selectedCourses)) {
           showAlert();
@@ -159,25 +183,19 @@
       });
     }
 
-    // پیدا کردن دوره با استفاده از کد درس
+    // Find course by its code
     function findCourseByCode(courseCode) {
-      const allCourses = []; // فرض کنید اینجا لیست کامل دروس موجود است
+      const allCourses = []; // Load all courses from JSON
       return allCourses.find(course => course.code === courseCode);
     }
 
-    // بررسی پیش‌نیازهای کلاس
+    // Validate if a course can be taken
     function isValidCourse(course, selectedCourses) {
       const prerequisites = course.prerequisites || [];
-      for (let i = 0; i < prerequisites.length; i++) {
-        const prereq = prerequisites[i];
-        if (!selectedCourses.includes(prereq)) {
-          return false;
-        }
-      }
-      return true;
+      return prerequisites.every(prereq => selectedCourses.includes(prereq));
     }
 
-    // نمایش پیام خطا
+    // Show alert for invalid course selection
     function showAlert() {
       const alertBox = document.getElementById('alert');
       alertBox.style.display = 'block';
@@ -185,6 +203,7 @@
         alertBox.style.display = 'none';
       }, 3000);
     }
+
   </script>
 </body>
 </html>
