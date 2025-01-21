@@ -6,204 +6,127 @@
   <title>انتخاب واحد</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://unpkg.com/dragula@3.7.3/dist/dragula.min.js"></script>
-  <style>
-    /* Custom Styles */
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-gap: 15px;
-      margin-top: 20px;
-    }
-    .day {
-      padding: 15px;
-      background-color: #2d3748;
-      color: white;
-      min-height: 150px;
-      overflow-y: auto;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-    .class-box {
-      background-color: #4A90E2;
-      color: white;
-      border-radius: 4px;
-      padding: 12px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      transition: background-color 0.3s;
-    }
-    .class-box:hover {
-      background-color: #357ABD;
-    }
-    .alert {
-      background-color: #e53e3e;
-      color: white;
-      padding: 15px;
-      margin-top: 10px;
-      border-radius: 5px;
-      display: none;
-    }
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .calendar {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .day {
-        min-height: 200px;
-      }
-    }
-  </style>
 </head>
 <body class="bg-gray-800 text-white">
   <div class="container mx-auto p-8">
+    <!-- نوار پیشرفت -->
+    <div class="progress-bar">
+      <div id="progress-fill" class="progress-bar-fill"></div>
+    </div>
+
     <h1 class="text-4xl font-bold text-center mb-6">انتخاب واحد</h1>
 
-    <!-- Alert for Errors -->
+    <!-- پیام هشدار در صورت انتخاب نادرست -->
     <div id="alert" class="alert">
       پیش‌نیازهای درس به درستی انتخاب نشده است!
     </div>
 
-    <!-- Step 1: Select Courses for Each Semester -->
+    <!-- مرحله اول: انتخاب دروس ترم‌ها -->
     <h2 class="text-2xl mb-4 text-center">مرحله اول: دروس ترم‌ها را انتخاب کنید</h2>
-    <div id="semester-selection" class="space-y-6 mb-8">
-      <!-- Dynamic content for semesters -->
-    </div>
+    <div id="semester-selection" class="space-y-6 mb-8"></div>
 
-    <!-- Calendar Table for Week -->
-    <div id="calendar" class="calendar">
-      <div class="day" id="day-0">یکشنبه</div>
-      <div class="day" id="day-1">دوشنبه</div>
-      <div class="day" id="day-2">سه‌شنبه</div>
-      <div class="day" id="day-3">چهارشنبه</div>
-      <div class="day" id="day-4">پنج‌شنبه</div>
-      <div class="day" id="day-5">جمعه</div>
-      <div class="day" id="day-6">شنبه</div>
-    </div>
+    <!-- مرحله دوم: نمایش دروس معتبر -->
+    <h2 id="phase-2-title" class="text-2xl mb-4 text-center hidden">مرحله دوم: دروس معتبر را انتخاب کنید</h2>
+    <div id="available-courses" class="space-y-6 mb-8 hidden"></div>
 
-    <!-- Buttons for Navigation -->
+    <!-- دکمه‌ها برای حرکت به مرحله بعد -->
     <div class="mt-8 text-center">
-      <button id="next-phase" class="bg-green-500 px-4 py-2 rounded">مرحله بعدی</button>
+      <button id="next-phase" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-200">مرحله بعدی</button>
     </div>
   </div>
 
   <script>
     let selectedCourses = [];
+    let currentPhase = 0;
+    let totalPhases = 3;
 
-    // Fetch and render data from chart.json
     fetch('https://raw.githubusercontent.com/mbmmd/iauhelper/main/chart.json')
       .then(response => response.json())
       .then(data => {
         renderSemesterSelection(data);
-        renderCalendar(data);
       });
 
-    // Render Semester Selection
     function renderSemesterSelection(data) {
       const semesterSelection = document.getElementById('semester-selection');
-
       data.program.semesters.forEach((semester, index) => {
         const semesterDiv = document.createElement('div');
         semesterDiv.classList.add('space-y-4');
         const semesterTitle = document.createElement('h3');
         semesterTitle.textContent = `ترم ${index + 1}`;
         semesterTitle.classList.add('text-xl', 'font-bold');
-
         const courseList = document.createElement('div');
         courseList.classList.add('grid', 'grid-cols-2', 'gap-4');
-        
-        semester.courses.forEach(course => {
-          const courseBox = document.createElement('button');
-          courseBox.classList.add('bg-blue-500', 'text-white', 'p-3', 'rounded', 'w-full');
-          courseBox.textContent = course.name;
-          courseBox.dataset.courseCode = course.code;
-          courseBox.onclick = function() {
-            // Toggle course selection
-            if (selectedCourses.includes(course)) {
-              selectedCourses = selectedCourses.filter(c => c !== course);
-              courseBox.classList.remove('bg-green-500');
-            } else {
+
+        const selectAllButton = document.createElement('button');
+        selectAllButton.classList.add('bg-blue-500', 'text-white', 'p-3', 'rounded', 'w-full');
+        selectAllButton.textContent = 'انتخاب همه دروس';
+        selectAllButton.onclick = function() {
+          semester.courses.forEach(course => {
+            if (!selectedCourses.includes(course)) {
               selectedCourses.push(course);
-              courseBox.classList.add('bg-green-500');
+              document.querySelector(`#checkbox-${course.code}`).checked = true;
+            }
+          });
+        };
+        semesterDiv.appendChild(selectAllButton);
+
+        semester.courses.forEach(course => {
+          const courseDiv = document.createElement('div');
+          courseDiv.classList.add('flex', 'items-center', 'space-x-2');
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.id = `checkbox-${course.code}`;
+          checkbox.classList.add('h-4', 'w-4');
+          checkbox.onclick = function() {
+            if (checkbox.checked) {
+              selectedCourses.push(course);
+            } else {
+              selectedCourses = selectedCourses.filter(c => c !== course);
             }
           };
-          courseList.appendChild(courseBox);
+          const label = document.createElement('label');
+          label.setAttribute('for', checkbox.id);
+          label.classList.add('text-white');
+          label.textContent = course.name;
+          courseDiv.appendChild(checkbox);
+          courseDiv.appendChild(label);
+          courseList.appendChild(courseDiv);
         });
-
         semesterDiv.appendChild(semesterTitle);
         semesterDiv.appendChild(courseList);
         semesterSelection.appendChild(semesterDiv);
       });
     }
 
-    // Render the Calendar Table
-    function renderCalendar(data) {
-      const calendar = document.getElementById('calendar');
+    document.getElementById('next-phase').addEventListener('click', () => {
+      currentPhase += 1;
+      if (currentPhase === 1) {
+        displayAvailableCourses();
+      }
+      if (currentPhase < totalPhases) {
+        updateProgressBar();
+      }
+    });
 
-      data.program.semesters.forEach((semester, index) => {
-        semester.courses.forEach(course => {
-          let courseBox = document.createElement('div');
-          courseBox.classList.add('class-box');
-          courseBox.textContent = course.name;
-          courseBox.setAttribute('draggable', 'true');
-          courseBox.dataset.courseCode = course.code;
-          courseBox.dataset.courseName = course.name;
-          courseBox.dataset.courseSemester = index + 1;
-
-          let dayIndex = index % 7;
-          calendar.children[dayIndex].appendChild(courseBox);
-        });
+    function displayAvailableCourses() {
+      const availableCoursesContainer = document.getElementById('available-courses');
+      availableCoursesContainer.innerHTML = '';
+      const validCourses = selectedCourses.filter(course => true);
+      validCourses.forEach(course => {
+        const courseBox = document.createElement('button');
+        courseBox.classList.add('bg-yellow-500', 'text-white', 'p-3', 'rounded', 'w-full');
+        courseBox.textContent = course.name;
+        availableCoursesContainer.appendChild(courseBox);
       });
-
-      setupDragAndDrop();
+      document.getElementById('phase-2-title').classList.remove('hidden');
+      availableCoursesContainer.classList.remove('hidden');
     }
 
-    // Drag and drop functionality
-    function setupDragAndDrop() {
-      const drake = dragula(document.querySelectorAll('.day'));
-
-      drake.on('drag', function (el) {
-        el.classList.add('dragging');
-      });
-
-      drake.on('drop', function (el, target, source) {
-        el.classList.remove('dragging');
-        const dayId = target.id;
-        const courseCode = el.dataset.courseCode;
-
-        // Check course prerequisites
-        const course = findCourseByCode(courseCode);
-        if (!isValidCourse(course, selectedCourses)) {
-          showAlert();
-        } else {
-          selectedCourses.push(course);
-        }
-      });
+    function updateProgressBar() {
+      const progressBarFill = document.getElementById('progress-fill');
+      const percentage = ((currentPhase + 1) / totalPhases) * 100;
+      progressBarFill.style.width = `${percentage}%`;
     }
-
-    // Find course by its code
-    function findCourseByCode(courseCode) {
-      const allCourses = []; // Load all courses from JSON
-      return allCourses.find(course => course.code === courseCode);
-    }
-
-    // Validate if a course can be taken
-    function isValidCourse(course, selectedCourses) {
-      const prerequisites = course.prerequisites || [];
-      return prerequisites.every(prereq => selectedCourses.includes(prereq));
-    }
-
-    // Show alert for invalid course selection
-    function showAlert() {
-      const alertBox = document.getElementById('alert');
-      alertBox.style.display = 'block';
-      setTimeout(() => {
-        alertBox.style.display = 'none';
-      }, 3000);
-    }
-
   </script>
 </body>
 </html>
