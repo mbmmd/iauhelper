@@ -18,20 +18,31 @@
             <div id="semester-selection" class="space-y-6 mb-8">
                 <!-- محتوای داینامیک برای ترم‌ها -->
             </div>
+            <button id="next-phase" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-200">مرحله بعدی</button>
         </div>
 
-        <!-- مرحله دوم: دروس پیشنهاد شده -->
+        <!-- مرحله دوم: دروس انتخابی -->
         <div id="phase-2" class="hidden">
             <h2 class="text-2xl mb-4 text-center">مرحله دوم: دروس انتخابی</h2>
             <div id="available-courses" class="space-y-6 mb-8">
                 <!-- محتوای داینامیک برای دروس پیشنهادی -->
             </div>
-            <div id="progress-bar" class="progress-bar">
-                <div id="progress-fill" class="progress-bar-fill"></div>
+
+            <!-- نوار پیشرفت -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="text-lg">تعداد واحدها: <span id="total-units">0</span> / 24</div>
+                <div class="w-2/3 bg-gray-600 rounded-full">
+                    <div id="progress-fill" class="bg-blue-500 rounded-full h-4" style="width: 0;"></div>
+                </div>
             </div>
-            <button id="next-phase" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-200">مرحله بعدی</button>
+
+            <div class="flex justify-between">
+                <button id="prev-phase" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700 transition-all duration-200">مرحله قبل</button>
+                <button id="next-phase-2" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-200">مرحله بعدی</button>
+            </div>
         </div>
     </div>
+
     <script src="app.js"></script>
 </body>
 </html>
