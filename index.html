@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>انتخاب واحد</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/dragula@3.7.3/dist/dragula.min.js"></script>
+  <style>
+    /* Custom Styles for Calendar */
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 10px;
+    }
+    .day {
+      padding: 10px;
+      background-color: #2d3748;
+      color: white;
+      height: 120px;
+      overflow-y: auto;
+      border-radius: 8px;
+    }
+    .class-box {
+      background-color: #4A90E2;
+      color: white;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .class-box.dragging {
+      opacity: 0.5;
+    }
+    .alert {
+      background-color: #e53e3e;
+      color: white;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-800 text-white">
+  <div class="container mx-auto p-8">
+    <h1 class="text-4xl font-bold text-center mb-6">انتخاب واحد</h1>
+
+    <!-- Alert for Errors -->
+    <div id="alert" class="alert">
+      پیش‌نیازهای درس به درستی انتخاب نشده است!
+    </div>
+
+    <!-- Calendar Table -->
+    <div id="calendar" class="calendar">
+      <!-- روزهای هفته -->
+      <div class="day" id="day-0">یکشنبه</div>
+      <div class="day" id="day-1">دوشنبه</div>
+      <div class="day" id="day-2">سه‌شنبه</div>
+      <div class="day" id="day-3">چهارشنبه</div>
+      <div class="day" id="day-4">پنج‌شنبه</div>
+      <div class="day" id="day-5">جمعه</div>
+      <div class="day" id="day-6">شنبه</div>
+    </div>
+
+    <!-- Buttons for Navigation -->
+    <div class="mt-8 text-center">
+      <button id="next-phase" class="bg-green-500 px-4 py-2 rounded">مرحله بعدی</button>
+    </div>
+  </div>
+
+  <script>
+    let selectedCourses = [];
+
+    // بارگذاری داده‌های JSON از GitHub
+    fetch('https://raw.githubusercontent.com/yourusername/yourrepo/main/chart.json')
+      .then(response => response.json())
+      .then(data => {
+        renderClasses(data);
+      });
+
+    function renderClasses(data) {
+      const calendar = document.getElementById('calendar');
+
+      data.program.semesters.forEach((semester, index) => {
+        semester.courses.forEach(course => {
+          let courseBox = document.createElement('div');
+          courseBox.classList.add('class-box');
+          courseBox.textContent = course.name;
+          courseBox.setAttribute('draggable', 'true');
+          courseBox.dataset.courseCode = course.code;
+          courseBox.dataset.courseName = course.name;
+          courseBox.dataset.courseSemester = index + 1;
+
+          // اضافه کردن کلاس‌ها به روزهای مختلف
+          let dayIndex = index % 7; // تخصیص درس به روزهای مختلف بر اساس ترم
+          calendar.children[dayIndex].appendChild(courseBox);
+        });
+      });
+
+      setupDragAndDrop();
+    }
+
+    function setupDragAndDrop() {
+      const drake = dragula(document.querySelectorAll('.day'));
+
+      drake.on('drag', function (el) {
+        el.classList.add('dragging');
+      });
+
+      drake.on('drop', function (el, target, source) {
+        el.classList.remove('dragging');
+        const dayId = target.id;
+        const dayIndex = Array.from(target.parentNode.children).indexOf(target);
+        const courseCode = el.dataset.courseCode;
+
+        // بررسی پیش‌نیازهای کلاس
+        const course = findCourseByCode(courseCode);
+        if (!isValidCourse(course, selectedCourses)) {
+          showAlert();
+        } else {
+          selectedCourses.push(course);
+        }
+      });
+    }
+
+    // پیدا کردن دوره با استفاده از کد درس
+    function findCourseByCode(courseCode) {
+      // فرض کنید که داده‌ها در بخش courses هستند و باید در آن جستجو کنید
+      const allCourses = []; // اینجا همه دروس از JSON باید بارگذاری شود
+      return allCourses.find(course => course.code === courseCode);
+    }
+
+    // بررسی پیش‌نیازهای کلاس
+    function isValidCourse(course, selectedCourses) {
+      const prerequisites = course.prerequisites || [];
+      for (let i = 0; i < prerequisites.length; i++) {
+        const prereq = prerequisites[i];
+        if (!selectedCourses.includes(prereq)) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // نمایش پیام خطا
+    function showAlert() {
+      const alertBox = document.getElementById('alert');
+      alertBox.style.display = 'block';
+      setTimeout(() => {
+        alertBox.style.display = 'none';
+      }, 3000);
+    }
+
+  </script>
+</body>
+</html>
