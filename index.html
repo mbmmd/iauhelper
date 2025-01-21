@@ -4,31 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>انتخاب واحد</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://unpkg.com/dragula@3.7.3/dist/dragula.min.js"></script>
-  <style>
-    .selected-course {
-      background-color: #4CAF50;
-      color: white;
-      border: 2px solid #388E3C;
-    }
-    .unselected-course {
-      background-color: #FFEB3B;
-      color: #333;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
 </head>
 <body class="bg-gray-800 text-white">
   <div class="container mx-auto p-8">
     <!-- نوار پیشرفت -->
-    <div class="progress-bar mb-4">
-      <div id="progress-fill" class="progress-bar-fill bg-blue-500 h-2"></div>
+    <div class="progress-bar">
+      <div id="progress-fill" class="progress-bar-fill"></div>
     </div>
 
     <h1 class="text-4xl font-bold text-center mb-6">انتخاب واحد</h1>
 
     <!-- پیام هشدار در صورت انتخاب نادرست -->
-    <div id="alert" class="alert hidden bg-red-500 p-4 text-white rounded">
+    <div id="alert" class="alert">
       پیش‌نیازهای درس به درستی انتخاب نشده است!
     </div>
 
@@ -42,107 +31,8 @@
 
     <!-- دکمه‌ها برای حرکت به مرحله بعد -->
     <div class="mt-8 text-center">
-      <button id="next-phase" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-300 ease-in-out">مرحله بعدی</button>
+      <button id="next-phase" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-200">مرحله بعدی</button>
     </div>
   </div>
-
-  <script>
-    let selectedCourses = [];
-    let currentPhase = 0;
-    let totalPhases = 3;
-
-    fetch('https://raw.githubusercontent.com/mbmmd/iauhelper/main/chart.json')
-      .then(response => response.json())
-      .then(data => {
-        renderSemesterSelection(data);
-      });
-
-    function renderSemesterSelection(data) {
-      const semesterSelection = document.getElementById('semester-selection');
-      data.program.semesters.forEach((semester, index) => {
-        const semesterDiv = document.createElement('div');
-        semesterDiv.classList.add('space-y-4');
-        const semesterTitle = document.createElement('h3');
-        semesterTitle.textContent = `ترم ${index + 1}`;
-        semesterTitle.classList.add('text-xl', 'font-bold');
-        const courseList = document.createElement('div');
-        courseList.classList.add('grid', 'grid-cols-2', 'gap-4');
-
-        const selectAllButton = document.createElement('button');
-        selectAllButton.classList.add('bg-blue-500', 'text-white', 'p-3', 'rounded', 'w-full', 'transition-transform', 'hover:scale-105');
-        selectAllButton.textContent = 'انتخاب همه دروس';
-        selectAllButton.onclick = function() {
-          semester.courses.forEach(course => {
-            if (!selectedCourses.includes(course)) {
-              selectedCourses.push(course);
-              document.querySelector(`#checkbox-${course.code}`).checked = true;
-              document.querySelector(`#course-${course.code}`).classList.add('selected-course');
-            }
-          });
-        };
-        semesterDiv.appendChild(selectAllButton);
-
-        semester.courses.forEach(course => {
-          const courseDiv = document.createElement('div');
-          courseDiv.classList.add('flex', 'items-center', 'space-x-2');
-          const checkbox = document.createElement('input');
-          checkbox.type = 'checkbox';
-          checkbox.id = `checkbox-${course.code}`;
-          checkbox.classList.add('h-4', 'w-4');
-          checkbox.onclick = function() {
-            if (checkbox.checked) {
-              selectedCourses.push(course);
-              document.querySelector(`#course-${course.code}`).classList.add('selected-course');
-            } else {
-              selectedCourses = selectedCourses.filter(c => c !== course);
-              document.querySelector(`#course-${course.code}`).classList.remove('selected-course');
-            }
-          };
-          const label = document.createElement('label');
-          label.setAttribute('for', checkbox.id);
-          label.classList.add('text-white');
-          label.textContent = course.name;
-          courseDiv.classList.add('transition-transform', 'hover:scale-105');
-          courseDiv.appendChild(checkbox);
-          courseDiv.appendChild(label);
-          courseDiv.id = `course-${course.code}`;
-          courseList.appendChild(courseDiv);
-        });
-        semesterDiv.appendChild(semesterTitle);
-        semesterDiv.appendChild(courseList);
-        semesterSelection.appendChild(semesterDiv);
-      });
-    }
-
-    document.getElementById('next-phase').addEventListener('click', () => {
-      currentPhase += 1;
-      if (currentPhase === 1) {
-        displayAvailableCourses();
-      }
-      if (currentPhase < totalPhases) {
-        updateProgressBar();
-      }
-    });
-
-    function displayAvailableCourses() {
-      const availableCoursesContainer = document.getElementById('available-courses');
-      availableCoursesContainer.innerHTML = '';
-      const validCourses = selectedCourses.filter(course => true);
-      validCourses.forEach(course => {
-        const courseBox = document.createElement('button');
-        courseBox.classList.add('bg-yellow-500', 'text-white', 'p-3', 'rounded', 'w-full', 'transition-transform', 'hover:scale-105');
-        courseBox.textContent = course.name;
-        availableCoursesContainer.appendChild(courseBox);
-      });
-      document.getElementById('phase-2-title').classList.remove('hidden');
-      availableCoursesContainer.classList.remove('hidden');
-    }
-
-    function updateProgressBar() {
-      const progressBarFill = document.getElementById('progress-fill');
-      const percentage = ((currentPhase + 1) / totalPhases) * 100;
-      progressBarFill.style.width = `${percentage}%`;
-    }
-  </script>
 </body>
 </html>
