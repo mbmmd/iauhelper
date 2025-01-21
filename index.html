@@ -74,7 +74,7 @@
     let selectedCourses = [];
 
     // بارگذاری داده‌های JSON از GitHub
-    fetch('https://raw.githubusercontent.com/yourusername/yourrepo/main/chart.json')
+    fetch('https://raw.githubusercontent.com/mbmmd/iauhelper/main/chart.json')
       .then(response => response.json())
       .then(data => {
         renderClasses(data);
