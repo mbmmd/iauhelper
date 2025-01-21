@@ -1,0 +1,797 @@
+{
+  "program": {
+    "name": "چارت کارشناسی پیوسته مهندسی کامپیوتر",
+    "total_credits": 152,
+    "semesters": [
+      {
+        "semester": 1,
+        "courses": [
+          {
+            "code": "173555003",
+            "name": "فارسی پیش‌دانشگاهی",
+            "type": "پیش‌دانشگاهی",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "173555001",
+            "name": "ریاضی پیش‌دانشگاهی",
+            "type": "پیش‌دانشگاهی",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "99072",
+            "name": "زبان پیش‌دانشگاهی",
+            "type": "پیش‌دانشگاهی",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "173555006",
+            "name": "فیزیک پیش‌دانشگاهی",
+            "type": "پیش‌دانشگاهی",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "4628145941",
+            "name": "مبانی کامپیوتر و برنامه‌سازی",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "4628165140",
+            "name": "ریاضی عمومی 1",
+            "type": "پایه",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["173555001"],
+            "corequisites": []
+          },
+          {
+            "code": "98870",
+            "name": "اندیشه اسلامی 1",
+            "type": "عمومی - معارف",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "99069",
+            "name": "خانواده و جمعیت",
+            "type": "عمومی",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "99079",
+            "name": "تربیت بدنی",
+            "type": "عمومی",
+            "credits": {
+              "theory": 0.5,
+              "practical": 0.5
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "99083",
+            "name": "انس با قرآن کریم",
+            "type": "عمومی",
+            "credits": {
+              "theory": 1,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          }
+        ],
+        "total_credits": {
+          "theory": 19.5,
+          "practical": 0.5
+        }
+      },
+      {
+        "semester": 4,
+        "courses": [
+          {
+            "code": "4628129896",
+            "name": "ریاضیات مهندسی",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628150360"],
+            "corequisites": []
+          },
+          {
+            "code": "1884150474",
+            "name": "معماری کامپیوتر",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628147873"],
+            "corequisites": []
+          },
+          {
+            "code": "4628153620",
+            "name": "نظریه زبان‌ها و ماشین‌ها",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628132653"],
+            "corequisites": []
+          },
+          {
+            "code": "4628137064",
+            "name": "طراحی الگوریتم‌ها",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628132653"],
+            "corequisites": []
+          },
+          {
+            "code": "4628147685",
+            "name": "مدارهای الکتریکی",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628150360"],
+            "corequisites": []
+          },
+          {
+            "code": "4628130407",
+            "name": "زبان تخصصی",
+            "type": "اصلی",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": ["98906"],
+            "corequisites": []
+          },
+          {
+            "code": "4628102515",
+            "name": "آزمایشگاه فیزیک",
+            "type": "پایه",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": ["4628141492"],
+            "corequisites": []
+          },
+          {
+            "code": "98966",
+            "name": "تاریخ تحلیلی صدر اسلام",
+            "type": "عمومی - معارف",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          }
+        ],
+        "total_credits": {
+          "theory": 20,
+          "practical": 1
+        }
+      },
+      {
+        "semester": 5,
+        "courses": [
+          {
+            "code": "4628135313",
+            "name": "سیگنال‌ها و سیستم‌ها",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628129896"],
+            "corequisites": []
+          },
+          {
+            "code": "4628164617",
+            "name": "سیستم‌های دیجیتال و طراحی کامپیوتری",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["1884150474"],
+            "corequisites": []
+          },
+          {
+            "code": "4628169362",
+            "name": "سیستم‌های عامل",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628132653", "1884150474"],
+            "corequisites": []
+          },
+          {
+            "code": "4628164737",
+            "name": "مهندسی نرم‌افزار",
+            "type": "تخصصی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628117515"],
+            "corequisites": []
+          },
+          {
+            "code": "4628155511",
+            "name": "هوش مصنوعی و سیستم‌های خبره",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628132653"],
+            "corequisites": []
+          },
+          {
+            "code": "4628127605",
+            "name": "روش پژوهش و ارائه",
+            "type": "اصلی",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": ["4628130407"],
+            "corequisites": []
+          },
+          {
+            "code": "4628181640",
+            "name": "آزمایشگاه مدارهای منطقی و معماری کامپیوتر",
+            "type": "اصلی",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": ["1884150474", "4628147873"],
+            "corequisites": []
+          },
+          {
+            "code": "98929",
+            "name": "انقلاب اسلامی ایران",
+            "type": "عمومی - معارف",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          }
+        ],
+        "total_credits": {
+          "theory": 19,
+          "practical": 1
+        }
+      },
+      {
+        "semester": 6,
+        "courses": [
+          {
+            "code": "4628130341",
+            "name": "ریزپردازنده و زبان اسمبلی",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["1884150474"],
+            "corequisites": []
+          },
+          {
+            "code": "4628114001",
+            "name": "پایگاه داده‌ها",
+            "type": "تخصصی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628132653"],
+            "corequisites": []
+          },
+          {
+            "code": "4628135451",
+            "name": "شبکه‌های کامپیوتری",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628132653"],
+            "corequisites": []
+          },
+          {
+            "code": "4628105622",
+            "name": "اصول طراحی کامپایلر",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628135362"],
+            "corequisites": []
+          },
+          {
+            "code": "4628102924",
+            "name": "آزمایشگاه مهندسی نرم‌افزار",
+            "type": "اختیاری - تخصصی",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": ["4628164737"],
+            "corequisites": []
+          },
+          {
+            "code": "4628101485",
+            "name": "آزمایشگاه پایگاه داده",
+            "type": "اختیاری - تخصصی",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": ["4628114001"],
+            "corequisites": []
+          },
+          {
+            "code": "4628102246",
+            "name": "آزمایشگاه سیستم‌های عامل",
+            "type": "اصلی",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": ["4628169362"],
+            "corequisites": []
+          },
+          {
+            "code": "99062",
+            "name": "ورزش 1",
+            "type": "عمومی",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "98841",
+            "name": "اندیشه اسلامی 2",
+            "type": "عمومی - معارف",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": ["98870"],
+            "corequisites": []
+          }
+        ],
+        "total_credits": {
+          "theory": 14,
+          "practical": 4
+        }
+      },
+      {
+        "semester": 7,
+        "courses": [
+          {
+            "code": "4628151527",
+            "name": "مهندسی اینترنت",
+            "type": "تخصصی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628135451", "4628114001"],
+            "corequisites": []
+          },
+          {
+            "code": "4628108189",
+            "name": "امنیت شبکه",
+            "type": "تخصصی - تمرکز",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628135451"],
+            "corequisites": []
+          },
+          {
+            "code": "4628164637",
+            "name": "انتقال داده",
+            "type": "تخصصی - تمرکز",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628135313", "1884107968"],
+            "corequisites": []
+          },
+          {
+            "code": "4628137355",
+            "name": "طراحی زبان‌های برنامه‌سازی",
+            "type": "تخصصی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628105622"],
+            "corequisites": []
+          },
+          {
+            "code": "4628144915",
+            "name": "مبانی داده‌کاوی",
+            "type": "اختیاری - تخصصی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628114001", "4628132653"],
+            "corequisites": []
+          },
+          {
+            "code": "4628101498",
+            "name": "آزمایشگاه شبکه‌های کامپیوتری",
+            "type": "اصلی",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": ["4628135451"],
+            "corequisites": []
+          },
+          {
+            "code": "4628102126",
+            "name": "آزمایشگاه ریزپردازنده",
+            "type": "اصلی",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": ["4628130341"],
+            "corequisites": []
+          },
+          {
+            "code": "98855",
+            "name": "تفسیر موضوعی قرآن کریم",
+            "type": "عمومی - معارف",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          }
+        ],
+        "total_credits": {
+          "theory": 17,
+          "practical": 2
+        }
+      },
+      {
+        "semester": 8,
+        "courses": [
+          {
+            "code": "4628164395",
+            "name": "سیستم‌های نهفته و بی‌درنگ",
+            "type": "تخصصی - تمرکز",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628130341", "4628169362"],
+            "corequisites": []
+          },
+          {
+            "code": "4628145172",
+            "name": "شبکه‌های بی‌سیم",
+            "type": "تخصصی - تمرکز",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628164637"],
+            "corequisites": []
+          },
+          {
+            "code": "4628182893",
+            "name": "کارگاه برنامه‌نویسی متلب",
+            "type": "اختیاری - تخصصی",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": ["4628135313"],
+            "corequisites": []
+          },
+          {
+            "code": "98864",
+            "name": "آشنایی با ارزش‌های دفاع مقدس",
+            "type": "عمومی",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "99075",
+            "name": "فرهنگ و تمدن اسلام و ایران",
+            "type": "عمومی",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          },
+          {
+            "code": "4628156372",
+            "name": "کارآموزی",
+            "type": "تخصصی",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": [],
+            "corequisites": [],
+            "notes": "قابل اخذ پس از گذراندن 80 واحد"
+          },
+          {
+            "code": "4628183688",
+            "name": "پروژه نرم‌افزار",
+            "type": "تخصصی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": [],
+            "notes": "قابل اخذ پس از گذراندن 100 واحد"
+          },
+          {
+            "code": "99073",
+            "name": "اندیشه‌ها و وصایای حضرت امام (ره)",
+            "type": "عمومی",
+            "credits": {
+              "theory": 1,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          }
+        ],
+        "total_credits": {
+          "theory": 14,
+          "practical": 2
+        }
+      },                             
+      {
+        "semester": 2,
+        "courses": [
+          {
+            "code": "99070",
+            "name": "فارسی عمومی",
+            "type": "عمومی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["173555003"],
+            "corequisites": []
+          },
+          {
+            "code": "4628129685",
+            "name": "ریاضی عمومی 2",
+            "type": "پایه",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628165140"],
+            "corequisites": []
+          },
+          {
+            "code": "4628141460",
+            "name": "فیزیک 1",
+            "type": "پایه",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["173555006"],
+            "corequisites": []
+          },
+          {
+            "code": "4628129880",
+            "name": "ریاضیات گسسته",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628145941", "4628165140"],
+            "corequisites": []
+          },
+          {
+            "code": "4628111667",
+            "name": "برنامه‌سازی پیشرفته",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628145941"],
+            "corequisites": []
+          },
+          {
+            "code": "98906",
+            "name": "زبان خارجه عمومی",
+            "type": "عمومی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["99072"],
+            "corequisites": []
+          },
+          {
+            "code": "4628160442",
+            "name": "کارگاه کامپیوتر",
+            "type": "پایه",
+            "credits": {
+              "theory": 0,
+              "practical": 1
+            },
+            "prerequisites": ["4628145941"],
+            "corequisites": []
+          }
+        ],
+        "total_credits": {
+          "theory": 18,
+          "practical": 1
+        }
+      },
+      {
+        "semester": 3,
+        "courses": [
+          {
+            "code": "4628150360",
+            "name": "معادلات دیفرانسیل",
+            "type": "پایه",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628165140"],
+            "corequisites": []
+          },
+          {
+            "code": "1884107968",
+            "name": "آمار و احتمال مهندسی",
+            "type": "پایه",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628129685"],
+            "corequisites": []
+          },
+          {
+            "code": "4628141492",
+            "name": "فیزیک 2",
+            "type": "پایه",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628141460"],
+            "corequisites": []
+          },
+          {
+            "code": "4628147873",
+            "name": "مدارهای منطقی",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628129685"],
+            "corequisites": []
+          },
+          {
+            "code": "4628132653",
+            "name": "ساختمان‌های داده",
+            "type": "اصلی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628111667", "4628129685"],
+            "corequisites": []
+          },
+          {
+            "code": "4628117515",
+            "name": "تحلیل و طراحی سیستم‌ها",
+            "type": "تخصصی",
+            "credits": {
+              "theory": 3,
+              "practical": 0
+            },
+            "prerequisites": ["4628111667"],
+            "corequisites": []
+          },
+          {
+            "code": "98923",
+            "name": "آیین زندگی",
+            "type": "عمومی - معارف",
+            "credits": {
+              "theory": 2,
+              "practical": 0
+            },
+            "prerequisites": [],
+            "corequisites": []
+          }
+        ],
+        "total_credits": {
+          "theory": 20,
+          "practical": 0
+        }
+      }
+    ]
+  }
+}
