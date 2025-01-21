@@ -6,18 +6,29 @@
   <title>انتخاب واحد</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
   <script src="https://unpkg.com/dragula@3.7.3/dist/dragula.min.js"></script>
+  <style>
+    .selected-course {
+      background-color: #4CAF50;
+      color: white;
+      border: 2px solid #388E3C;
+    }
+    .unselected-course {
+      background-color: #FFEB3B;
+      color: #333;
+    }
+  </style>
 </head>
 <body class="bg-gray-800 text-white">
   <div class="container mx-auto p-8">
     <!-- نوار پیشرفت -->
-    <div class="progress-bar">
-      <div id="progress-fill" class="progress-bar-fill"></div>
+    <div class="progress-bar mb-4">
+      <div id="progress-fill" class="progress-bar-fill bg-blue-500 h-2"></div>
     </div>
 
     <h1 class="text-4xl font-bold text-center mb-6">انتخاب واحد</h1>
 
     <!-- پیام هشدار در صورت انتخاب نادرست -->
-    <div id="alert" class="alert">
+    <div id="alert" class="alert hidden bg-red-500 p-4 text-white rounded">
       پیش‌نیازهای درس به درستی انتخاب نشده است!
     </div>
 
@@ -31,7 +42,7 @@
 
     <!-- دکمه‌ها برای حرکت به مرحله بعد -->
     <div class="mt-8 text-center">
-      <button id="next-phase" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-200">مرحله بعدی</button>
+      <button id="next-phase" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all duration-300 ease-in-out">مرحله بعدی</button>
     </div>
   </div>
 
@@ -58,13 +69,14 @@
         courseList.classList.add('grid', 'grid-cols-2', 'gap-4');
 
         const selectAllButton = document.createElement('button');
-        selectAllButton.classList.add('bg-blue-500', 'text-white', 'p-3', 'rounded', 'w-full');
+        selectAllButton.classList.add('bg-blue-500', 'text-white', 'p-3', 'rounded', 'w-full', 'transition-transform', 'hover:scale-105');
         selectAllButton.textContent = 'انتخاب همه دروس';
         selectAllButton.onclick = function() {
           semester.courses.forEach(course => {
             if (!selectedCourses.includes(course)) {
               selectedCourses.push(course);
               document.querySelector(`#checkbox-${course.code}`).checked = true;
+              document.querySelector(`#course-${course.code}`).classList.add('selected-course');
             }
           });
         };
@@ -80,16 +92,20 @@
           checkbox.onclick = function() {
             if (checkbox.checked) {
               selectedCourses.push(course);
+              document.querySelector(`#course-${course.code}`).classList.add('selected-course');
             } else {
               selectedCourses = selectedCourses.filter(c => c !== course);
+              document.querySelector(`#course-${course.code}`).classList.remove('selected-course');
             }
           };
           const label = document.createElement('label');
           label.setAttribute('for', checkbox.id);
           label.classList.add('text-white');
           label.textContent = course.name;
+          courseDiv.classList.add('transition-transform', 'hover:scale-105');
           courseDiv.appendChild(checkbox);
           courseDiv.appendChild(label);
+          courseDiv.id = `course-${course.code}`;
           courseList.appendChild(courseDiv);
         });
         semesterDiv.appendChild(semesterTitle);
@@ -114,7 +130,7 @@
       const validCourses = selectedCourses.filter(course => true);
       validCourses.forEach(course => {
         const courseBox = document.createElement('button');
-        courseBox.classList.add('bg-yellow-500', 'text-white', 'p-3', 'rounded', 'w-full');
+        courseBox.classList.add('bg-yellow-500', 'text-white', 'p-3', 'rounded', 'w-full', 'transition-transform', 'hover:scale-105');
         courseBox.textContent = course.name;
         availableCoursesContainer.appendChild(courseBox);
       });
