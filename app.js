@@ -10,6 +10,19 @@ document.getElementById('next-phase').addEventListener('click', () => {
     }
 });
 
+document.getElementById('prev-phase').addEventListener('click', () => {
+    if (currentPhase === 2) {
+        currentPhase--;
+        document.getElementById('phase-2').classList.add('hidden');
+        document.getElementById('phase-1').classList.remove('hidden');
+    }
+});
+
+document.getElementById('next-phase-2').addEventListener('click', () => {
+    // فرض کنید در مرحله 2 کاربر همه انتخاب‌های خود را کرده و می‌خواهد به مرحله بعدی برود
+    alert("مرحله بعدی");
+});
+
 function renderSemesterSelection(data) {
     const semesterSelection = document.getElementById('semester-selection');
     data.program.semesters.forEach((semester, index) => {
@@ -58,17 +71,22 @@ function renderSemesterSelection(data) {
 function updateProgressBar() {
     const progress = (totalUnits / 24) * 100;  // حداکثر 24 واحد
     document.getElementById('progress-fill').style.width = `${progress}%`;
+    document.getElementById('total-units').textContent = totalUnits;
     updateProgressBarColor(progress);
 }
 
 function updateProgressBarColor(progress) {
-    if (progress < 50) {
-        document.getElementById('progress-fill').style.backgroundColor = 'red'; // کمتر از 12 واحد
-    } else if (progress < 80) {
-        document.getElementById('progress-fill').style.backgroundColor = 'yellow'; // 12 تا 20 واحد
-    } else if (progress <= 100) {
-        document.getElementById('progress-fill').style.backgroundColor = 'green'; // بیشتر از 20 واحد
+    let color = 'red';  // پیش‌فرض قرمز
+    if (progress >= 50) {
+        color = 'yellow';
     }
+    if (progress >= 80) {
+        color = 'green';
+    }
+    if (progress === 100) {
+        color = 'blue';
+    }
+    document.getElementById('progress-fill').style.backgroundColor = color;
 }
 
 fetch('https://raw.githubusercontent.com/mbmmd/iauhelper/main/chart.json')
